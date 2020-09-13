@@ -1,4 +1,9 @@
 import { Component } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Post } from './post';
+import { Observable } from 'rxjs';
+// import { Observable } from 'rxjs';
+
 
 @Component({
   selector: 'app-root',
@@ -6,6 +11,24 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  name = 'TodoListCrashCourse'; 
+
+  readonly ROOT_URL = 'https://jsonplaceholder.typicode.com';
+
+  posts = []
+  
+  constructor(private http:HttpClient){
+
+  }
+
+  getPosts(){
+    this.http.get(this.ROOT_URL + '/posts').toPromise().then((res:any)=>{
+      this.posts = res;
+    }).catch(error=>{
+      console.log(error);
+      
+    })
+  }
+
+ 
 }
 
